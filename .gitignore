@@ -1,0 +1,7 @@
+# Internal working notes — strategy, offer, DRE correction. NOT for the repo.
+README.md
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log

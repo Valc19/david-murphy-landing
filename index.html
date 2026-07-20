@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1F3A5F" />
+  <!-- DEMO: keep out of search engines until the Mailchimp form is live.
+       Remove this line when the page goes into real production. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>What's Your San Carlos Home Worth? | David Murphy — Encore Realty</title>
+  <meta
+    name="description"
+    content="Thinking about selling your San Carlos home? Get a free, personalized home value report from a local expert — real market data, honest advice, zero pressure."
+  />
+
+  <!-- Open Graph (helps when David/Aholibama shares the link) -->
+  <meta property="og:title" content="What's Your San Carlos Home Really Worth?" />
+  <meta property="og:description" content="Free, no-obligation home value report from a San Carlos local. Real market data, honest advice, zero pressure." />
+  <meta property="og:type" content="website" />
+  <!-- TODO: replace with the live URL once deployed -->
+  <meta property="og:url" content="https://www.davidmurphysd.com/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- =========================================================
+       HEADER — text-based brand (no separate logo file for David)
+       ========================================================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand brand-text" aria-label="David Murphy, Realtor, Encore Realty">
+        <span class="brand-name">David Murphy</span>
+        <span class="brand-sub">Realtor · Encore Realty</span>
+      </a>
+      <a href="tel:+17206354872" class="header-call" aria-label="Call David Murphy">
+        <span class="header-call-icon" aria-hidden="true">📞</span>
+        <span class="header-call-text">(720) 635-4872</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- =========================================================
+         [A] HERO
+         ========================================================= -->
+    <section class="hero" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 class="hero-headline" data-i18n="hero.headline"></h1>
+          <p class="hero-sub" data-i18n="hero.sub"></p>
+
+          <!-- On mobile this button scrolls to the form (which sits below).
+               On desktop the form is already visible to the right. -->
+          <a href="#lead-form" class="btn btn-accent btn-block hero-cta-mobile" data-scroll>
+            <span data-i18n="cta.primary"></span>
+          </a>
+
+          <ul class="hero-bullets" aria-label="Why this is safe">
+            <li data-i18n="hero.bullet1"></li>
+            <li data-i18n="hero.bullet2"></li>
+            <li data-i18n="hero.bullet3"></li>
+          </ul>
+        </div>
+
+        <!-- ===================== LEAD FORM (single source of truth) ===================== -->
+        <div class="hero-form-wrap" id="lead-form">
+          <div class="form-card">
+            <h2 class="form-title" data-i18n="form.title"></h2>
+            <p class="form-subtitle" data-i18n="form.subtitle"></p>
+
+            <!--
+              MAILCHIMP INTEGRATION
+              =====================
+              Same wiring as the Colorado template — see README.md.
+              >>> REPLACE PLACEHOLDERS before going live <<<
+            -->
+            <form
+              id="rental-form"
+              novalidate
+              action="https://YOUR_DC.list-manage.com/subscribe/post-json?u=PLACEHOLDER_U&id=PLACEHOLDER_ID&c=?"
+              method="get"
+            >
+              <!-- Honeypot (anti-bot). Mailchimp expects this; keep it visually hidden. -->
+              <div aria-hidden="true" class="hp-field">
+                <label>Leave this field empty
+                  <input type="text" name="b_PLACEHOLDER_U_PLACEHOLDER_ID" tabindex="-1" value="" autocomplete="off" />
+                </label>
+              </div>
+
+              <div class="field">
+                <label for="f-name" data-i18n="form.name"></label>
+                <input type="text" id="f-name" name="FNAME" autocomplete="name" required />
+                <small class="field-error" data-error-for="f-name"></small>
+              </div>
+
+              <div class="field">
+                <label for="f-email" data-i18n="form.email"></label>
+                <input type="email" id="f-email" name="EMAIL" autocomplete="email" inputmode="email" required />
+                <small class="field-error" data-error-for="f-email"></small>
+              </div>
+
+              <div class="field">
+                <label for="f-phone" data-i18n="form.phone"></label>
+                <input type="tel" id="f-phone" name="PHONE" autocomplete="tel" inputmode="tel" required />
+                <small class="field-error" data-error-for="f-phone"></small>
+              </div>
+
+              <div class="field">
+                <label for="f-address" data-i18n="form.address"></label>
+                <input type="text" id="f-address" name="ADDRESS" autocomplete="street-address" required />
+                <small class="field-error" data-error-for="f-address"></small>
+              </div>
+
+              <div class="field">
+                <label for="f-situation" data-i18n="form.situation"></label>
+                <!--
+                  SITUATION dropdown.
+                  If you map this to a Mailchimp TEXT merge field, keep name="SITUATION".
+                  If you map it to a Mailchimp GROUP instead, the name must become
+                  group[GROUP_ID][OPTION_ID] and each <option> needs the option value.
+                  See README.md → "Mapping the situation field".
+                -->
+                <select id="f-situation" name="SITUATION">
+                  <option value="" data-i18n="form.situation.placeholder"></option>
+                  <option value="Just curious" data-i18n="form.situation.opt1"></option>
+                  <option value="Selling within a year" data-i18n="form.situation.opt2"></option>
+                  <option value="Ready to sell now" data-i18n="form.situation.opt3"></option>
+                  <option value="Downsizing or upgrading" data-i18n="form.situation.opt4"></option>
+                  <option value="Other" data-i18n="form.situation.opt5"></option>
+                </select>
+              </div>
+
+              <!--
+                TCPA CONSENT (required — CA compliance, per the offer's
+                "casilla TCPA" line item). Required checkbox, own validator.
+                Map to a Mailchimp merge field/tag if you want the consent
+                timestamped on the contact record.
+              -->
+              <div class="consent-field">
+                <input type="checkbox" id="f-consent" name="TCPA_CONSENT" value="yes" required />
+                <label for="f-consent" data-i18n="form.consent"></label>
+              </div>
+              <small class="field-error" data-error-for="f-consent"></small>
+
+              <button type="submit" class="btn btn-accent btn-block btn-submit">
+                <span class="btn-label" data-i18n="cta.primary"></span>
+                <span class="btn-spinner" aria-hidden="true"></span>
+              </button>
+
+              <p class="form-reassure" data-i18n="form.reassure"></p>
+              <p class="form-feedback" id="form-feedback" role="alert" aria-live="assertive"></p>
+            </form>
+
+            <!-- Success state (revealed in place after submit) -->
+            <div class="form-success" id="form-success" hidden>
+              <div class="form-success-check" aria-hidden="true">✓</div>
+              <h3 data-i18n="success.title"></h3>
+              <p data-i18n="success.body"></p>
+              <a href="tel:+17206354872" class="btn btn-outline btn-block">
+                <span data-i18n="success.call"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [B] TRUST BAR
+         ========================================================= -->
+    <section class="trust-bar" aria-label="Why homeowners trust David">
+      <div class="container trust-row">
+        <div class="trust-item"><span class="trust-dot" aria-hidden="true"></span><span data-i18n="trust.1"></span></div>
+        <div class="trust-item"><span class="trust-dot" aria-hidden="true"></span><span data-i18n="trust.2"></span></div>
+        <div class="trust-item"><span class="trust-dot" aria-hidden="true"></span><span data-i18n="trust.3"></span></div>
+        <div class="trust-item"><span class="trust-dot" aria-hidden="true"></span><span data-i18n="trust.4"></span></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [C] PROBLEM / EMPATHY
+         ========================================================= -->
+    <section class="section" id="problem">
+      <div class="container narrow">
+        <h2 class="section-title" data-i18n="problem.title"></h2>
+        <ul class="pain-list">
+          <li><span class="pain-icon" aria-hidden="true">•</span><span data-i18n="problem.p1"></span></li>
+          <li><span class="pain-icon" aria-hidden="true">•</span><span data-i18n="problem.p2"></span></li>
+          <li><span class="pain-icon" aria-hidden="true">•</span><span data-i18n="problem.p3"></span></li>
+          <li><span class="pain-icon" aria-hidden="true">•</span><span data-i18n="problem.p4"></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [D] WHAT YOU GET
+         ========================================================= -->
+    <section class="section section-alt" id="what-you-get">
+      <div class="container">
+        <h2 class="section-title center" data-i18n="get.title"></h2>
+        <div class="cards-3">
+          <article class="value-card">
+            <div class="value-num">1</div>
+            <h3 data-i18n="get.c1.title"></h3>
+            <p data-i18n="get.c1.body"></p>
+          </article>
+          <article class="value-card">
+            <div class="value-num">2</div>
+            <h3 data-i18n="get.c2.title"></h3>
+            <p data-i18n="get.c2.body"></p>
+          </article>
+          <article class="value-card">
+            <div class="value-num">3</div>
+            <h3 data-i18n="get.c3.title"></h3>
+            <p data-i18n="get.c3.body"></p>
+          </article>
+        </div>
+        <div class="center mt">
+          <a href="#lead-form" class="btn btn-accent" data-scroll><span data-i18n="cta.primary"></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [E] HOW IT WORKS
+         ========================================================= -->
+    <section class="section" id="how">
+      <div class="container">
+        <h2 class="section-title center" data-i18n="how.title"></h2>
+        <ol class="steps">
+          <li class="step">
+            <div class="step-num">1</div>
+            <p data-i18n="how.s1"></p>
+          </li>
+          <li class="step">
+            <div class="step-num">2</div>
+            <p data-i18n="how.s2"></p>
+          </li>
+          <li class="step">
+            <div class="step-num">3</div>
+            <p data-i18n="how.s3"></p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [F] WHY DAVID
+         ========================================================= -->
+    <section class="section section-alt" id="why-david">
+      <div class="container why-grid">
+        <div class="why-photo">
+          <img src="assets/david-murphy.jpg" alt="David Murphy, Realtor, Encore Realty" width="420" height="480" />
+        </div>
+        <div class="why-copy">
+          <h2 class="section-title" data-i18n="david.title"></h2>
+          <!-- TODO[COPY]: David/Aholibama to confirm exact bio wording. -->
+          <p data-i18n="david.bio"></p>
+          <!-- TODO[COPY]: draft quote in David's voice — his to edit/approve, not a verified quote. -->
+          <blockquote class="why-quote" data-i18n="david.quote"></blockquote>
+          <a href="#lead-form" class="btn btn-accent" data-scroll><span data-i18n="cta.primary"></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [G] SOCIAL PROOF — placeholder block (NO invented testimonials)
+         ========================================================= -->
+    <section class="section" id="testimonials">
+      <div class="container">
+        <h2 class="section-title center" data-i18n="testi.title"></h2>
+        <!--
+          TODO[CONTENT]: replace these placeholders with REAL testimonials only.
+          Format: owner first name + San Diego neighborhood. Do not invent.
+        -->
+        <div class="cards-3">
+          <article class="testi-card is-placeholder">
+            <p class="testi-quote">“[ Real client testimonial goes here. ]”</p>
+            <p class="testi-author">— First name, Neighborhood</p>
+          </article>
+          <article class="testi-card is-placeholder">
+            <p class="testi-quote">“[ Real client testimonial goes here. ]”</p>
+            <p class="testi-author">— First name, Neighborhood</p>
+          </article>
+          <article class="testi-card is-placeholder">
+            <p class="testi-quote">“[ Real client testimonial goes here. ]”</p>
+            <p class="testi-author">— First name, Neighborhood</p>
+          </article>
+        </div>
+        <p class="testi-note" data-i18n="testi.note"></p>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [H] FAQ — accordion
+         ========================================================= -->
+    <section class="section section-alt" id="faq">
+      <div class="container narrow">
+        <h2 class="section-title center" data-i18n="faq.title"></h2>
+        <div class="accordion">
+          <div class="acc-item">
+            <button class="acc-trigger" aria-expanded="false" aria-controls="faq1">
+              <span data-i18n="faq.q1"></span><span class="acc-icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel" id="faq1" role="region"><p data-i18n="faq.a1"></p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger" aria-expanded="false" aria-controls="faq2">
+              <span data-i18n="faq.q2"></span><span class="acc-icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel" id="faq2" role="region"><p data-i18n="faq.a2"></p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger" aria-expanded="false" aria-controls="faq3">
+              <span data-i18n="faq.q3"></span><span class="acc-icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel" id="faq3" role="region"><p data-i18n="faq.a3"></p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger" aria-expanded="false" aria-controls="faq4">
+              <span data-i18n="faq.q4"></span><span class="acc-icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel" id="faq4" role="region"><p data-i18n="faq.a4"></p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         [I] FINAL CTA
+         ========================================================= -->
+    <section class="section final-cta" id="final-cta">
+      <div class="container narrow center">
+        <h2 class="final-cta-title" data-i18n="final.title"></h2>
+        <p class="final-cta-sub" data-i18n="final.sub"></p>
+        <a href="#lead-form" class="btn btn-accent btn-lg" data-scroll><span data-i18n="cta.primary"></span></a>
+        <p class="form-reassure light" data-i18n="form.reassure"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       [J] FOOTER — CA compliance: DRE (individual + brokerage),
+       brokerage disclosure, Equal Housing Opportunity.
+       ========================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>David Murphy</strong> · Encore Realty<br />
+        <span class="footer-muted" data-i18n="footer.tagline"></span>
+      </div>
+      <ul class="footer-contact">
+        <li><a href="tel:+17206354872">(720) 635-4872</a></li>
+        <li><a href="mailto:david@encorerealtysd.com">david@encorerealtysd.com</a></li>
+        <li><a href="https://www.encorerealtysd.com/" target="_blank" rel="noopener">EncoreRealtySD.com</a></li>
+      </ul>
+      <div class="footer-legal">
+        <span data-i18n="footer.license"></span><br />
+        <span data-i18n="footer.equalhousing"></span><br />
+        <a href="#" data-i18n="footer.privacy"></a>
+        <p class="footer-copy">© <span id="year"></span> David Murphy, Encore Realty. <span data-i18n="footer.rights"></span></p>
+        <p class="footer-disclosure" data-i18n="footer.disclosure"></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       STICKY MOBILE CTA BAR
+       ========================================================= -->
+  <div class="sticky-cta" id="sticky-cta">
+    <a href="#lead-form" class="btn btn-accent btn-block" data-scroll><span data-i18n="cta.sticky"></span></a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
